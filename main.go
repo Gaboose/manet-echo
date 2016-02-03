@@ -6,6 +6,7 @@ import (
 	ma "github.com/jbenet/go-multiaddr"
 	"io"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -47,8 +48,8 @@ func echo(rwc io.ReadWriteCloser) {
 			rwc.Close()
 			return
 		}
-
-		s := fmt.Sprintf("you're the \"%s\"", string(buf[:n]))
+		s := strings.TrimRight(string(buf[:n]), "\n")
+		s = fmt.Sprintf("you're the \"%s\"\n", s)
 		_, err = rwc.Write([]byte(s))
 	}
 }
